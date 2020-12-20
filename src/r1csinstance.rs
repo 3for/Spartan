@@ -3,6 +3,7 @@ use super::errors::ProofVerifyError;
 use super::math::Math;
 use super::random::RandomTape;
 use super::scalar::Scalar;
+use super::scalar::ScalarFromPrimitives;
 use super::sparse_mlpoly::{
   MultiSparseMatPolynomialAsDense, SparseMatEntry, SparseMatPolyCommitment,
   SparseMatPolyCommitmentGens, SparseMatPolyEvalProof, SparseMatPolynomial,
@@ -164,12 +165,33 @@ impl R1CSInstance {
       Z[num_vars] = Scalar::one(); // set the constant term to 1
       Z
     };
+    /*let mut Z: Vec<Scalar> = Vec::new();
+    Z.push((35 as usize).to_scalar());
+    Z.push((9 as usize).to_scalar());
+    Z.push((27 as usize).to_scalar());
+    Z.push((30 as usize).to_scalar());
+    Z.push(Scalar::one());
+    Z.push((3 as usize).to_scalar());
+    println!("zyd Z: {:?}", Z);*/
 
     // three sparse matrices
     let mut A: Vec<SparseMatEntry> = Vec::new();
     let mut B: Vec<SparseMatEntry> = Vec::new();
     let mut C: Vec<SparseMatEntry> = Vec::new();
     let one = Scalar::one();
+  /*  A.push(SparseMatEntry::new(0, 5, one));
+    B.push(SparseMatEntry::new(0, 5, one));
+    C.push(SparseMatEntry::new(0, 1, one));
+    A.push(SparseMatEntry::new(1, 1, one));
+    B.push(SparseMatEntry::new(1, 5, one));
+    C.push(SparseMatEntry::new(1, 2, one));
+    A.push(SparseMatEntry::new(2, 2, one));
+    A.push(SparseMatEntry::new(2, 5, one));
+    B.push(SparseMatEntry::new(2, 4, one));
+    C.push(SparseMatEntry::new(2, 3, one));
+    A.push(SparseMatEntry::new(3, 5, one));
+    B.push(SparseMatEntry::new(3, 5, one));
+    C.push(SparseMatEntry::new(3, 1, one));*/
     for i in 0..num_cons {
       let A_idx = i % size_z;
       let B_idx = (i + 2) % size_z;
@@ -214,6 +236,8 @@ impl R1CSInstance {
       inst.is_sat(&Z[..num_vars].to_vec(), &Z[num_vars + 1..].to_vec()),
       true,
     );
+
+    println!("zyd produce_synthetic_r1cs finished! num_poly_vars_y:{:?}", num_poly_vars_y);
 
     (inst, Z[..num_vars].to_vec(), Z[num_vars + 1..].to_vec())
   }
@@ -288,7 +312,9 @@ impl R1CSInstance {
   }
 
   pub fn commit(&self, gens: &R1CSCommitmentGens) -> (R1CSCommitment, R1CSDecommitment) {
+    println!("zyd 1111");
     let (comm, dense) = SparseMatPolynomial::multi_commit(&[&self.A, &self.B, &self.C], &gens.gens);
+    println!("zyd 2222");
     let r1cs_comm = R1CSCommitment {
       num_cons: self.num_cons,
       num_vars: self.num_vars,

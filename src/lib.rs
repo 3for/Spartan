@@ -479,9 +479,11 @@ mod tests {
     let num_vars = 256;
     let num_cons = num_vars;
     let num_inputs = 10;
+    // TODO.should be more general.....
+    let max_nz_entries = ((num_vars + num_inputs + 1)as usize).next_power_of_two(); //make it more general, for one constraint for A should have more than 1 zeros.
 
     // produce public generators
-    let gens = SNARKGens::new(num_cons, num_vars, num_inputs, num_cons);
+    let gens = SNARKGens::new(num_cons, num_vars, num_inputs, max_nz_entries);
 
     // produce a synthetic R1CSInstance
     let (inst, vars, inputs) = Instance::produce_synthetic_r1cs(num_cons, num_vars, num_inputs);

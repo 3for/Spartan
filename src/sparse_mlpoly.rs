@@ -484,10 +484,12 @@ impl SparseMatPolynomial {
   ) -> (SparseMatPolyCommitment, MultiSparseMatPolynomialAsDense) {
     let batch_size = sparse_polys.len();
     let dense = SparseMatPolynomial::multi_sparse_to_dense_rep(sparse_polys);
-
+    println!("zyd 333 dense.comb_ops:{:?}, gens.gens_ops.n:{:?}", dense.comb_ops, gens.gens_ops.gens.gens_n.n);
     let (comm_comb_ops, _blinds_comb_ops) = dense.comb_ops.commit(&gens.gens_ops, None);
+    println!("zyd 444");
     let (comm_comb_mem, _blinds_comb_mem) = dense.comb_mem.commit(&gens.gens_mem, None);
-
+    println!("zyd 555");
+    
     (
       SparseMatPolyCommitment {
         batch_size,
@@ -1665,6 +1667,8 @@ mod tests {
       num_nz_entries,
       3,
     );
+    println!("zyd gens.gens_ops:{:?}, gens.gens_mem:{:?}, gens.gens_derefs:{:?}", 
+      gens.gens_ops.gens.gens_n.n, gens.gens_mem.gens.gens_n.n, gens.gens_derefs.gens.gens_n.n);
 
     // commitment
     let (poly_comm, dense) =
