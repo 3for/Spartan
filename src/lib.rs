@@ -476,11 +476,12 @@ mod tests {
 
   #[test]
   pub fn check_snark() {
-    let num_vars = 256;
+    let num_vars = 4;
     let num_cons = num_vars;
-    let num_inputs = 10;
+    let num_inputs = 1;
     // TODO.should be more general.....
-    let max_nz_entries = ((num_vars + num_inputs + 1)as usize).next_power_of_two(); //make it more general, for one constraint for A should have more than 1 zeros.
+    //let max_nz_entries = ((num_vars + num_inputs + 1)as usize).next_power_of_two(); //make it more general, for one constraint for A should have more than 1 zeros.
+    let max_nz_entries = num_cons;
 
     // produce public generators
     let gens = SNARKGens::new(num_cons, num_vars, num_inputs, max_nz_entries);
@@ -488,12 +489,15 @@ mod tests {
     // produce a synthetic R1CSInstance
     let (inst, vars, inputs) = Instance::produce_synthetic_r1cs(num_cons, num_vars, num_inputs);
 
+    println!("zyd aaaa");
     // create a commitment to R1CSInstance
     let (comm, decomm) = SNARK::encode(&inst, &gens);
 
+    println!("zyd bbbb");
     // produce a proof
     let mut prover_transcript = Transcript::new(b"example");
     let proof = SNARK::prove(&inst, &decomm, vars, &inputs, &gens, &mut prover_transcript);
+    println!("zyd cccc");
 
     // verify the proof
     let mut verifier_transcript = Transcript::new(b"example");

@@ -158,28 +158,28 @@ impl R1CSInstance {
     let size_z = num_vars + num_inputs + 1;
 
     // produce a random satisfying assignment
-    let Z = {
+    /*let Z = {
       let mut Z: Vec<Scalar> = (0..size_z)
         .map(|_i| Scalar::random(&mut csprng))
         .collect::<Vec<Scalar>>();
       Z[num_vars] = Scalar::one(); // set the constant term to 1
       Z
-    };
-    /*let mut Z: Vec<Scalar> = Vec::new();
+    };*/
+    let mut Z: Vec<Scalar> = Vec::new();
     Z.push((35 as usize).to_scalar());
     Z.push((9 as usize).to_scalar());
     Z.push((27 as usize).to_scalar());
     Z.push((30 as usize).to_scalar());
     Z.push(Scalar::one());
     Z.push((3 as usize).to_scalar());
-    println!("zyd Z: {:?}", Z);*/
+    println!("zyd Z: {:?}", Z);
 
     // three sparse matrices
     let mut A: Vec<SparseMatEntry> = Vec::new();
     let mut B: Vec<SparseMatEntry> = Vec::new();
     let mut C: Vec<SparseMatEntry> = Vec::new();
     let one = Scalar::one();
-  /*  A.push(SparseMatEntry::new(0, 5, one));
+    A.push(SparseMatEntry::new(0, 5, one));
     B.push(SparseMatEntry::new(0, 5, one));
     C.push(SparseMatEntry::new(0, 1, one));
     A.push(SparseMatEntry::new(1, 1, one));
@@ -188,11 +188,15 @@ impl R1CSInstance {
     A.push(SparseMatEntry::new(2, 2, one));
     A.push(SparseMatEntry::new(2, 5, one));
     B.push(SparseMatEntry::new(2, 4, one));
-    C.push(SparseMatEntry::new(2, 3, one));
+    C.push(SparseMatEntry::new(2, 3, one)); 
+    /* A.push(SparseMatEntry::new(2, 5, one));
+    B.push(SparseMatEntry::new(2, 5, one));
+    C.push(SparseMatEntry::new(2, 1, one)); */
+
     A.push(SparseMatEntry::new(3, 5, one));
     B.push(SparseMatEntry::new(3, 5, one));
-    C.push(SparseMatEntry::new(3, 1, one));*/
-    for i in 0..num_cons {
+    C.push(SparseMatEntry::new(3, 1, one));
+    /*for i in 0..num_cons {
       let A_idx = i % size_z;
       let B_idx = (i + 2) % size_z;
       A.push(SparseMatEntry::new(i, A_idx, one));
@@ -211,7 +215,7 @@ impl R1CSInstance {
           AB_val * C_val.invert().unwrap(),
         ));
       }
-    }
+    }*/
 
     Timer::print(&format!("number_non-zero_entries_A {}", A.len()));
     Timer::print(&format!("number_non-zero_entries_B {}", B.len()));

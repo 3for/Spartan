@@ -312,6 +312,8 @@ impl SparseMatPolyCommitmentGens {
     let num_vars_derefs =
       num_nz_entries.next_power_of_two().log2() + (batch_size * 2).next_power_of_two().log2();
 
+    println!("zyd num_vars_ops:{:?}, num_vars_mem:{:?}, num_vars_derefs:{:?}, num_vars_x:{:?}, num_vars_y:{:?}", num_vars_ops, num_vars_mem, num_vars_derefs, num_vars_x, num_vars_y);
+
     let gens_ops = PolyCommitmentGens::new(num_vars_ops, label);
     let gens_mem = PolyCommitmentGens::new(num_vars_mem, label);
     let gens_derefs = PolyCommitmentGens::new(num_vars_derefs, label);
@@ -373,6 +375,8 @@ impl SparseMatPolynomial {
       .max()
       .unwrap()
       .next_power_of_two();
+
+    println!("zyd N:{:?}", N);
 
     let mut ops_row_vec: Vec<Vec<usize>> = Vec::new();
     let mut ops_col_vec: Vec<Vec<usize>> = Vec::new();
