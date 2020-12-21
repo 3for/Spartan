@@ -179,23 +179,25 @@ impl R1CSInstance {
     let mut B: Vec<SparseMatEntry> = Vec::new();
     let mut C: Vec<SparseMatEntry> = Vec::new();
     let one = Scalar::one();
+    
     A.push(SparseMatEntry::new(0, 5, one));
     B.push(SparseMatEntry::new(0, 5, one));
     C.push(SparseMatEntry::new(0, 1, one));
+
     A.push(SparseMatEntry::new(1, 1, one));
     B.push(SparseMatEntry::new(1, 5, one));
     C.push(SparseMatEntry::new(1, 2, one));
+
     A.push(SparseMatEntry::new(2, 2, one));
     A.push(SparseMatEntry::new(2, 5, one));
     B.push(SparseMatEntry::new(2, 4, one));
     C.push(SparseMatEntry::new(2, 3, one)); 
-    /* A.push(SparseMatEntry::new(2, 5, one));
-    B.push(SparseMatEntry::new(2, 5, one));
-    C.push(SparseMatEntry::new(2, 1, one)); */
 
-    A.push(SparseMatEntry::new(3, 5, one));
-    B.push(SparseMatEntry::new(3, 5, one));
-    C.push(SparseMatEntry::new(3, 1, one));
+    A.push(SparseMatEntry::new(3, 3, one));
+    A.push(SparseMatEntry::new(3, 4, (5 as usize).to_scalar()));
+    B.push(SparseMatEntry::new(3, 4, one));
+    C.push(SparseMatEntry::new(3, 0, one));
+    
     /*for i in 0..num_cons {
       let A_idx = i % size_z;
       let B_idx = (i + 2) % size_z;

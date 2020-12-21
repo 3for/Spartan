@@ -249,6 +249,8 @@ impl AddrTimestamps {
         audit_ts[addr] = w_ts;
       }
 
+      println!("zyd ops_addr poly:{:?}, read_ts poly:{:?}", DensePolynomial::from_usize(&ops_addr_inst), DensePolynomial::from_usize(&read_ts));
+
       ops_addr_vec.push(DensePolynomial::from_usize(&ops_addr_inst));
       read_ts_vec.push(DensePolynomial::from_usize(&read_ts));
     }
@@ -383,6 +385,7 @@ impl SparseMatPolynomial {
     let mut val_vec: Vec<DensePolynomial> = Vec::new();
     for poly in sparse_polys {
       let (ops_row, ops_col, val) = poly.sparse_to_dense_vecs(N);
+      println!("zyd ops_row:{:?}, ops_col:{:?}, val:{:?}", ops_row, ops_col, val);
       ops_row_vec.push(ops_row);
       ops_col_vec.push(ops_col);
       val_vec.push(DensePolynomial::new(val));
@@ -395,9 +398,13 @@ impl SparseMatPolynomial {
     } else {
       any_poly.num_vars_y.pow2()
     };
+    println!("zyd num_mem_cells:{:?}", num_mem_cells);
 
     let row = AddrTimestamps::new(num_mem_cells, N, ops_row_vec);
     let col = AddrTimestamps::new(num_mem_cells, N, ops_col_vec);
+
+    println!("zyd row ops len:{:?}, row read len:{:?}, col ops len:{:?}, col read len:{:?}, val len:{:?}", 
+      row.ops_addr.len(), row.read_ts.len(), col.ops_addr.len(), col.read_ts.len(), val_vec.len());
 
     // combine polynomials into a single polynomial for commitment purposes
     let comb_ops = DensePolynomial::merge(
