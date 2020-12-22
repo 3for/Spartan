@@ -248,8 +248,9 @@ impl AddrTimestamps {
         let w_ts = r_ts + 1;
         audit_ts[addr] = w_ts;
       }
+      println!("zyd read_ts:{:?}, audit_ts:{:?}", read_ts, audit_ts);
 
-      println!("zyd ops_addr poly:{:?}, read_ts poly:{:?}", DensePolynomial::from_usize(&ops_addr_inst), DensePolynomial::from_usize(&read_ts));
+      println!("zyd ops_addr poly:{:?}", DensePolynomial::from_usize(&ops_addr_inst));
 
       ops_addr_vec.push(DensePolynomial::from_usize(&ops_addr_inst));
       read_ts_vec.push(DensePolynomial::from_usize(&read_ts));

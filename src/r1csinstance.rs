@@ -243,8 +243,6 @@ impl R1CSInstance {
       true,
     );
 
-    println!("zyd produce_synthetic_r1cs finished! num_poly_vars_y:{:?}", num_poly_vars_y);
-
     (inst, Z[..num_vars].to_vec(), Z[num_vars + 1..].to_vec())
   }
 
