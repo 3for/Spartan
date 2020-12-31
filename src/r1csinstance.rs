@@ -166,12 +166,12 @@ impl R1CSInstance {
       Z
     };*/
     let mut Z: Vec<Scalar> = Vec::new();
-    Z.push((35 as usize).to_scalar());
+    Z.push((3 as usize).to_scalar());
     Z.push((9 as usize).to_scalar());
     Z.push((27 as usize).to_scalar());
     Z.push((30 as usize).to_scalar());
     Z.push(Scalar::one());
-    Z.push((3 as usize).to_scalar());
+     Z.push((35 as usize).to_scalar());
     println!("zyd Z: {:?}", Z);
 
     // three sparse matrices
@@ -180,23 +180,23 @@ impl R1CSInstance {
     let mut C: Vec<SparseMatEntry> = Vec::new();
     let one = Scalar::one();
     
-    A.push(SparseMatEntry::new(0, 5, one));
-    B.push(SparseMatEntry::new(0, 5, one));
+    A.push(SparseMatEntry::new(0, 0, one));
+    B.push(SparseMatEntry::new(0, 0, one));
     C.push(SparseMatEntry::new(0, 1, one));
 
     A.push(SparseMatEntry::new(1, 1, one));
-    B.push(SparseMatEntry::new(1, 5, one));
+    B.push(SparseMatEntry::new(1, 0, one));
     C.push(SparseMatEntry::new(1, 2, one));
 
     A.push(SparseMatEntry::new(2, 2, one));
-    A.push(SparseMatEntry::new(2, 5, one));
+    A.push(SparseMatEntry::new(2, 0, one));
     B.push(SparseMatEntry::new(2, 4, one));
     C.push(SparseMatEntry::new(2, 3, one)); 
 
     A.push(SparseMatEntry::new(3, 3, one));
     A.push(SparseMatEntry::new(3, 4, (5 as usize).to_scalar()));
     B.push(SparseMatEntry::new(3, 4, one));
-    C.push(SparseMatEntry::new(3, 0, one));
+    C.push(SparseMatEntry::new(3, 5, one));
     
     /*for i in 0..num_cons {
       let A_idx = i % size_z;

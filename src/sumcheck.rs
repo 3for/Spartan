@@ -655,6 +655,7 @@ impl ZKSumcheckInstanceProof {
           eval_point_2,
           eval_point_3,
         ];
+        println!("zyd prove evals: {:?}", evals);
         let poly = UniPoly::from_evals(&evals);
         let comm_poly = poly.commit(gens_n, &blinds_poly[j]).compress();
         (poly, comm_poly)
@@ -720,14 +721,14 @@ impl ZKSumcheckInstanceProof {
         assert_eq!(target.commit(&blind, &gens_1).compress(), comm_target);
 
         let a = {
-          // the vector to use to decommit for sum-check test
+          // the vector to use to decommit for sum-check test. [2,1,1,1]
           let a_sc = {
             let mut a = vec![Scalar::one(); poly.degree() + 1];
             a[0] += Scalar::one();
             a
           };
 
-          // the vector to use to decommit for evaluation
+          // the vector to use to decommit for evaluation. [1,r_j,r_j^2,r_j^3]
           let a_eval = {
             let mut a = vec![Scalar::one(); poly.degree() + 1];
             for j in 1..a.len() {

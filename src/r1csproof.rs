@@ -185,8 +185,11 @@ impl R1CSProof {
     let tau = transcript.challenge_vector(b"challenge_tau", num_rounds_x);
     // compute the initial evaluation table for R(\tau, x)
     let mut poly_tau = DensePolynomial::new(EqPolynomial::new(tau).evals());
+    //let mut poly_tau = DensePolynomial::new(EqPolynomial::new([Scalar::one()+Scalar::one()+Scalar::one(),Scalar::one()+Scalar::one()].to_vec()).evals()); //zyd, assertion error. fix the \tau=[1,1]
+
     let (mut poly_Az, mut poly_Bz, mut poly_Cz) =
       inst.multiply_vec(inst.get_num_cons(), z.len(), &z);
+    println!("zyd poly_Az:{:?}, poly_Bz:{:?}, poly_Cz:{:?}", poly_Az, poly_Bz, poly_Cz);
 
     let (sc_proof_phase1, rx, _claims_phase1, blind_claim_postsc1) = R1CSProof::prove_phase_one(
       num_rounds_x,
